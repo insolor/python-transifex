@@ -274,7 +274,7 @@ class TransifexAPI(object):
         if response.status_code != requests.codes['OK']:
             raise TransifexAPIException(response)
         else:
-            handle = open(output_path, 'w')
+            handle = open(output_path, 'wb')
             for line in response.iter_content():
                 handle.write(line)
             handle.close()
