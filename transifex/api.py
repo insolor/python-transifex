@@ -99,7 +99,7 @@ class TransifexAPI(object):
         if response.status_code != requests.codes['OK']:
             raise TransifexAPIException(response)
         
-        return response.json()
+        return json.loads(response.text)
         
     def new_resource(self, project_slug, path_to_pofile, resource_slug=None,
                      resource_name=None):
@@ -181,7 +181,7 @@ class TransifexAPI(object):
         if response.status_code != requests.codes['OK']:
             raise TransifexAPIException(response)
         else:
-            return response.json()
+            return json.loads(response.text)
         
     def delete_resource(self, project_slug, resource_slug):
         """
@@ -239,7 +239,7 @@ class TransifexAPI(object):
         if response.status_code != requests.codes['OK']:
             raise TransifexAPIException(response)
         else:
-            return response.json()
+            return json.loads(response.text)
             
     def get_translation(self, project_slug, resource_slug, language_code,
                         path_to_pofile):
@@ -274,8 +274,8 @@ class TransifexAPI(object):
         if response.status_code != requests.codes['OK']:
             raise TransifexAPIException(response)
         else:
-            handle = open(output_path, 'wb')
-            for line in response.iter_content():
+            handle = open(output_path, 'w')
+            for line in response.iter_lines():
                 handle.write(line)
             handle.close()
             
@@ -301,7 +301,7 @@ class TransifexAPI(object):
         if response.status_code != requests.codes['OK']:
             raise TransifexAPIException(response)
         
-        content = response.json()
+        content = json.loads(response.text)
         languages = [
             language['code'] for language in content['available_languages']
         ]
