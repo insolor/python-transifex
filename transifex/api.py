@@ -274,9 +274,8 @@ class TransifexAPI(object):
         if response.status_code != requests.codes['OK']:
             raise TransifexAPIException(response)
         else:
-            handle = open(output_path, 'w')
-            for line in response.iter_lines():
-                handle.write(line)
+            handle = open(output_path, 'wb')
+            handle.write(response.content)
             handle.close()
             
     def list_languages(self, project_slug, resource_slug):
